@@ -1,9 +1,10 @@
 'use client'
 
-import { theme } from '@/lib/design-system/theme/theme'
 import { gql, useQuery } from '@apollo/client'
 import { ThemeProvider } from '@mui/material'
-import ExampleProductList from './components/ExampleProductList'
+
+import { theme } from '@/lib/design-system/theme/theme'
+import ExampleProductList from '@/app/components/ExampleProductList'
 
 const PRODUCTS_QUERY = gql`
   query Products($first: Int) {
@@ -31,7 +32,7 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={theme}>
-      <h1 className="text-2xl font-bold">Example Product List</h1>
+      <h1>Example Product List</h1>
       {!data || loading ? (
         <p>Loading products...</p>
       ) : (

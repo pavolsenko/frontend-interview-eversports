@@ -18,6 +18,8 @@ export default function ExampleProductList(
     <MultiSelect
       label={'Select Product'}
       onSelect={onSelect}
+      selectedLabel={'product'}
+      selectedLabelMulti={'products'}
       options={props.products.map(
         (product: Product): MultiSelectOption => ({
           id: product.id,

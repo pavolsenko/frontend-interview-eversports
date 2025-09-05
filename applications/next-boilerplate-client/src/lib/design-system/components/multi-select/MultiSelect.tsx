@@ -1,7 +1,7 @@
+import { multiSelectOptionsWrapperStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'
 import React, { useState, useRef } from 'react'
 import {
   Box,
-  TextField,
   Popover,
   MenuItem,
   Checkbox,
@@ -9,6 +9,7 @@ import {
   Button,
   InputBase,
   IconButton,
+  Typography,
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -23,6 +24,8 @@ interface MultiSelectProps {
   options: MultiSelectOption[]
   onSelect: (selectedValues: string[]) => void
   label: string
+  selectedLabel: string
+  selectedLabelMulti: string
 }
 
 export default function MultiSelect(props: Readonly<MultiSelectProps>) {
@@ -34,20 +37,21 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   function openPopover(event: React.MouseEvent<HTMLElement>) {
     popoverRef.current = selected
     setAnchorEl(event.currentTarget)
+    setSearch('')
   }
 
   function closePopover() {
     setAnchorEl(null)
   }
 
-  function toggleItem(id: string) {
+  function onItemClick(id: string) {
     popoverRef.current = popoverRef.current.includes(id)
       ? popoverRef.current.filter((i) => i !== id)
       : [...popoverRef.current, id]
     setSelected([...popoverRef.current])
   }
 
-  function selectAll() {
+  function onSelectAllClick() {
     popoverRef.current =
       popoverRef.current.length === props.options.length
         ? []
@@ -55,47 +59,60 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
     setSelected([...popoverRef.current])
   }
 
-  function applySelection() {
+  function onApplyClick() {
     props.onSelect(popoverRef.current)
     closePopover()
   }
 
-  function cancelSelection() {
+  function onCancelClick() {
     setSelected(popoverRef.current)
     closePopover()
   }
 
   function filteredOptions() {
-    return props.options.filter((option) =>
+    return props.options.filter((option: MultiSelectOption): boolean =>
       option.name.toLowerCase().includes(search.toLowerCase()),
     )
   }
 
+  function getLabel() {
+    if (!selected.length) {
+      return props.label
+    }
+
+    return `${selected.length} ${
+      selected.length === 1 ? props.selectedLabel : props.selectedLabelMulti
+    } selected`
+  }
+
   return (
     <>
-      <TextField
-        value={selected.length ? `${selected.length} Selected` : ''}
-        placeholder={props.label}
+      <Box
         onClick={openPopover}
-        fullWidth
-        slotProps={{
-          input: {
-            readOnly: true,
-            endAdornment: (
-              <IconButton
-                size="small"
-                onClick={anchorEl ? closePopover : openPopover}
-              >
-                {anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              </IconButton>
-            ),
-          },
-        }}
-      />
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        border={1}
+        borderColor="grey.400"
+        borderRadius={1}
+        px={2}
+        py={1}
+        sx={{ cursor: 'pointer', minHeight: 40 }}
+      >
+        <Typography variant="body2">{getLabel()}</Typography>
+        <IconButton
+          size="small"
+          onClick={anchorEl ? closePopover : openPopover}
+          sx={{ p: 0 }}
+        >
+          {anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </IconButton>
+      </Box>
+
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        onClose={cancelSelection}
+        onClose={onCancelClick}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       >
         <Box p={1} width={250}>
@@ -108,28 +125,28 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
               fullWidth
             />
           </Box>
-          <MenuItem onClick={selectAll}>
-            <Checkbox
-              checked={selected.length === props.options.length}
-              indeterminate={
-                selected.length > 0 && selected.length < props.options.length
-              }
-            />
-            <ListItemText primary="Select All" />
-          </MenuItem>
-
-          {filteredOptions().map((option) => (
-            <MenuItem key={option.id} onClick={() => toggleItem(option.id)}>
-              <Checkbox checked={selected.includes(option.id)} />
-              <ListItemText primary={option.name} />
+          <Box sx={multiSelectOptionsWrapperStyles}>
+            <MenuItem onClick={onSelectAllClick}>
+              <Checkbox
+                checked={selected.length === props.options.length}
+                indeterminate={
+                  selected.length > 0 && selected.length < props.options.length
+                }
+              />
+              <ListItemText primary="Select All" />
             </MenuItem>
-          ))}
-
+            {filteredOptions().map((option) => (
+              <MenuItem key={option.id} onClick={() => onItemClick(option.id)}>
+                <Checkbox checked={selected.includes(option.id)} />
+                <ListItemText primary={option.name} />
+              </MenuItem>
+            ))}
+          </Box>
           <Box display="flex" justifyContent="space-between" mt={1}>
-            <Button size="small" onClick={cancelSelection}>
+            <Button size="small" onClick={onCancelClick}>
               Cancel
             </Button>
-            <Button size="small" variant="contained" onClick={applySelection}>
+            <Button size="small" variant="contained" onClick={onApplyClick}>
               Apply
             </Button>
           </Box>

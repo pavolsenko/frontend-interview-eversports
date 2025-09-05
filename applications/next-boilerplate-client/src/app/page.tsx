@@ -1,6 +1,8 @@
 'use client'
 
+import { theme } from '@/lib/design-system/theme/theme'
 import { gql, useQuery } from '@apollo/client'
+import { ThemeProvider } from '@mui/material'
 import ExampleProductList from './components/ExampleProductList'
 
 const PRODUCTS_QUERY = gql`
@@ -28,15 +30,13 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>
 
   return (
-    <div className="flex sm:items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex flex-col gap-2 p-4 bg-white shadow-md rounded-md w-full h-auto sm:min-h-[480px] sm:min-w-[584px] sm:h-auto sm:w-auto">
-        <h1 className="text-2xl font-bold">Example Product List</h1>
-        {!data || loading ? (
-          <p>Loading products...</p>
-        ) : (
-          <ExampleProductList products={data.products.nodes} />
-        )}
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <h1 className="text-2xl font-bold">Example Product List</h1>
+      {!data || loading ? (
+        <p>Loading products...</p>
+      ) : (
+        <ExampleProductList products={data.products.nodes} />
+      )}
+    </ThemeProvider>
   )
 }

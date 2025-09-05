@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import ApolloWrapper from '../lib/ApolloWrapper'
 
-import './globals.css'
+import ApolloWrapper from '@/lib/ApolloWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 

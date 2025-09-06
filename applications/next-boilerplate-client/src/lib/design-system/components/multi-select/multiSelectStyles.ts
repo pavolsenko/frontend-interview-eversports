@@ -1,5 +1,7 @@
 import { SxProps, Theme } from '@mui/material'
 
+const MENU_ITEM_HEIGHT = 44
+
 export const multiSelectStyles = (theme: Theme, isOpen: boolean): SxProps => ({
   cursor: 'pointer',
   display: 'flex',
@@ -7,9 +9,9 @@ export const multiSelectStyles = (theme: Theme, isOpen: boolean): SxProps => ({
   alignItems: 'center',
 
   width: '370px',
-  height: '44px',
+  height: MENU_ITEM_HEIGHT,
 
-  paddingX: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
 
   border:
     '1px solid ' +
@@ -34,7 +36,7 @@ export const multiSelectItemStyles = (
   display: 'flex',
   alignItems: 'center',
   width: '100%',
-  height: '44px',
+  height: MENU_ITEM_HEIGHT,
   paddingX: theme.spacing(2),
   borderBottom: hasBorderBottom
     ? '1px solid ' + theme.palette.grey[300]
@@ -42,7 +44,7 @@ export const multiSelectItemStyles = (
 })
 
 export const multiSelectOptionsWrapperStyles: SxProps = {
-  height: 6 * 44,
+  height: 6 * MENU_ITEM_HEIGHT,
   overflow: 'auto',
 }
 

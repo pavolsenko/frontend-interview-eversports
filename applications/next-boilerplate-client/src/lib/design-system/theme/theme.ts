@@ -10,7 +10,14 @@ export const theme: Theme = createTheme({
     },
   },
   components: {
-    MuiButton: {},
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          textTransform: 'none',
+        },
+      },
+    },
   },
   typography: {
     fontFamily: '"Figtree", sans-serif',

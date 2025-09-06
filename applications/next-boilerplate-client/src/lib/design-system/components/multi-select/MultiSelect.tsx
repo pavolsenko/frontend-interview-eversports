@@ -94,10 +94,7 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
     <>
       <Box onClick={openPopover} sx={multiSelectStyles(theme, isOpen)}>
         <Typography variant="body2">{getLabel()}</Typography>
-        <IconButton
-          size="small"
-          onClick={anchorEl ? closePopover : openPopover}
-        >
+        <IconButton color="inherit">
           {anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </IconButton>
       </Box>

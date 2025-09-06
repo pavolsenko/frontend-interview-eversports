@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Figtree } from 'next/font/google'
 
 import ApolloWrapper from '@/lib/ApolloWrapper'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Figtree({ subsets: ['latin'], weight: '500' })
 
 export const metadata: Metadata = {
   title: 'Eversports frontend assignment',

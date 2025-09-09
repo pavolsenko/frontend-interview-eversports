@@ -30,3 +30,5 @@ UX challenge - how the select all checkbox should behave
 
 - select all applies only to the
 - use isIndeterminat?
+
+as a bonus I've added unit tests using jest

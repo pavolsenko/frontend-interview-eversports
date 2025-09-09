@@ -28,6 +28,7 @@ interface MultiSelectProps {
 
 export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const [popoverWidth, setPopoverWidth] = useState<number>(0)
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
     props.selectedOptions || [],
   )
@@ -41,6 +42,9 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
     setAnchorEl(event.currentTarget)
     setSearch('')
     setIsOpen(true)
+    setPopoverWidth(
+      Math.round(event.currentTarget.getBoundingClientRect().width),
+    )
   }
 
   function closePopover() {
@@ -56,7 +60,7 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   }
 
   function onSelectMultiple(ids: string[]) {
-    setSelectedOptions(ids)
+    setSelectedOptions([...popoverRef.current, ...ids])
   }
 
   function onApplyClick() {
@@ -101,22 +105,26 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
         anchorEl={anchorEl}
         onClose={onCancelClick}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        slotProps={{
+          paper: {
+            sx: multiSelectPopoverStyles(theme, popoverWidth),
+          },
+        }}
       >
-        <Box sx={multiSelectPopoverStyles(theme)}>
-          <MultiSelectSearch searchTerm={search} setSearchTerm={setSearch} />
+        <MultiSelectSearch searchTerm={search} setSearchTerm={setSearch} />
 
-          <MultiSelectOptions
-            options={filteredOptions()}
-            selectedOptions={selectedOptions}
-            onItemClick={onItemClick}
-            onSelectMultiple={onSelectMultiple}
-          />
+        <MultiSelectOptions
+          options={filteredOptions()}
+          selectedOptions={selectedOptions}
+          onItemClick={onItemClick}
+          onSelectMultiple={onSelectMultiple}
+        />
 
-          <MultiSelectActionButtons
-            onApplyClick={onApplyClick}
-            onCancelClick={onCancelClick}
-          />
-        </Box>
+        <MultiSelectActionButtons
+          onApplyClick={onApplyClick}
+          onCancelClick={onCancelClick}
+        />
       </Popover>
     </>
   )

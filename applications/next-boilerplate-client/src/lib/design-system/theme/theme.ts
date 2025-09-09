@@ -18,6 +18,13 @@ export const theme: Theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          paddingleft: 0,
+        },
+      },
+    },
   },
   typography: {
     fontFamily: '"Figtree", sans-serif',

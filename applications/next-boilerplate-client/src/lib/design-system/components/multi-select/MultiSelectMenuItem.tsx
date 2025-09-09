@@ -3,7 +3,10 @@ import { Checkbox, ListItemText, MenuItem, useTheme } from '@mui/material'
 
 import { MultiSelectOption } from '@/lib/design-system/components/multi-select/MultiSelect'
 
-import { multiSelectItemStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'
+import {
+  multiSelectItemStyles,
+  multiSelectItemTextStyles,
+} from '@/lib/design-system/components/multi-select/multiSelectStyles'
 
 interface MultiSelectMenuItemProps {
   option: MultiSelectOption
@@ -20,7 +23,10 @@ export function MultiSelectMenuItem(props: Readonly<MultiSelectMenuItemProps>) {
       sx={multiSelectItemStyles(theme)}
     >
       <Checkbox checked={props.isChecked} />
-      <ListItemText primary={props.option.name} />
+      <ListItemText
+        primary={props.option.name}
+        sx={multiSelectItemTextStyles(theme)}
+      />
     </MenuItem>
   )
 }

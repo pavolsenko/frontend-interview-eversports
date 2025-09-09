@@ -26,6 +26,7 @@ export function MultiSelectOptions(props: Readonly<MultiSelectOptionsProps>) {
   function onSelectAllClick() {
     if (props.selectedOptions.length === props.options.length) {
       props.onSelectMultiple([])
+      return
     }
 
     props.onSelectMultiple(
@@ -49,7 +50,7 @@ export function MultiSelectOptions(props: Readonly<MultiSelectOptionsProps>) {
           key={option.id}
           option={option}
           isChecked={props.selectedOptions.includes(option.id)}
-          onItemClick={props.onItemClick}
+          onItemClick={() => props.onItemClick(option.id)}
         />
       ))}
     </Box>

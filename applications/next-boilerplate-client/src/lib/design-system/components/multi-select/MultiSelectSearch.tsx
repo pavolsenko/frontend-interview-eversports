@@ -14,13 +14,14 @@ export function MultiSelectSearch(props: Readonly<MultiSelectSearchProps>) {
 
   return (
     <Box sx={multiSelectItemStyles(theme, true)}>
-      <SearchIcon fontSize="small" style={{ marginRight: 8 }} />
+      <SearchIcon fontSize="small" style={{ marginLeft: '10px' }} />
       <InputBase
         placeholder="Search"
         value={props.searchTerm}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           props.setSearchTerm(event.target.value)
         }
+        sx={{ marginLeft: '20px' }}
         fullWidth
       />
     </Box>

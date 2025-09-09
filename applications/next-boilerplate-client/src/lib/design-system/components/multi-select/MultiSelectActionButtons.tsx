@@ -15,7 +15,7 @@ export function MultiSelectActionButtons(
 
   return (
     <Box sx={multiSelectActionButtonsStyles(theme)}>
-      <Button size="small" onClick={props.onCancelClick}>
+      <Button size="small" onClick={props.onCancelClick} color={'inherit'}>
         Cancel
       </Button>
       <Button size="small" variant="contained" onClick={props.onApplyClick}>

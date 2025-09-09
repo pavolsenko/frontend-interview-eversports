@@ -1,7 +1,10 @@
 import { Checkbox, ListItemText, MenuItem, useTheme } from '@mui/material'
 import React from 'react'
 
-import { multiSelectItemStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'
+import {
+  multiSelectItemStyles,
+  multiSelectItemTextStyles,
+} from '@/lib/design-system/components/multi-select/multiSelectStyles'
 
 interface MultiSelectMenuItemSelectAllProps {
   onClick: () => void
@@ -20,7 +23,10 @@ export function MultiSelectMenuItemSelectAll(
         checked={props.isChecked}
         indeterminate={props.isIndeterminate}
       />
-      <ListItemText primary="Select All" />
+      <ListItemText
+        primary="Select All"
+        sx={multiSelectItemTextStyles(theme)}
+      />
     </MenuItem>
   )
 }

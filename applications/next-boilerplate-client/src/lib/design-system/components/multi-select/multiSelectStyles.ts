@@ -12,6 +12,7 @@ export const multiSelectStyles = (theme: Theme, isOpen: boolean): SxProps => ({
   height: MENU_ITEM_HEIGHT,
 
   paddingLeft: theme.spacing(2),
+  margin: theme.spacing(2),
 
   border:
     '1px solid ' +
@@ -24,9 +25,14 @@ export const multiSelectStyles = (theme: Theme, isOpen: boolean): SxProps => ({
   lineHeight: '24px',
 })
 
-export const multiSelectPopoverStyles = (theme: Theme): SxProps => ({
-  cursor: 'pointer',
-  width: '370px',
+export const multiSelectPopoverStyles = (
+  theme: Theme,
+  popoverWidth: number,
+): SxProps => ({
+  width: popoverWidth,
+  maxWidth: '100%',
+  boxShadow: '0px 8px 16px 0px #14141429',
+  marginTop: theme.spacing(1),
 })
 
 export const multiSelectItemStyles = (
@@ -38,6 +44,7 @@ export const multiSelectItemStyles = (
   width: '100%',
   height: MENU_ITEM_HEIGHT,
   paddingX: theme.spacing(2),
+  paddingLeft: theme.spacing(1),
   borderBottom: hasBorderBottom
     ? '1px solid ' + theme.palette.grey[300]
     : 'none',
@@ -55,7 +62,6 @@ export const multiSelectActionButtonsStyles = (theme: Theme): SxProps => ({
   height: '48px',
   borderTop: '1px solid ' + theme.palette.grey[300],
   paddingX: theme.spacing(2),
-  paddingY: theme.spacing(1),
 })
 
 export const multiSelectNoOptionsStyles: SxProps = {
@@ -65,3 +71,7 @@ export const multiSelectNoOptionsStyles: SxProps = {
   width: '100%',
   height: 6 * MENU_ITEM_HEIGHT,
 }
+
+export const multiSelectItemTextStyles = (theme: Theme): SxProps => ({
+  paddingLeft: theme.spacing(1),
+})

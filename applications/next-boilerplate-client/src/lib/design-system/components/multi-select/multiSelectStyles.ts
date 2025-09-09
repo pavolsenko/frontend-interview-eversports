@@ -57,3 +57,11 @@ export const multiSelectActionButtonsStyles = (theme: Theme): SxProps => ({
   paddingX: theme.spacing(2),
   paddingY: theme.spacing(1),
 })
+
+export const multiSelectNoOptionsStyles: SxProps = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: 6 * MENU_ITEM_HEIGHT,
+}

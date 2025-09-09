@@ -6,7 +6,7 @@ import { multiSelectItemStyles } from '@/lib/design-system/components/multi-sele
 interface MultiSelectMenuItemSelectAllProps {
   onClick: () => void
   isChecked: boolean
-  isIndeterminate: boolean
+  isIndeterminate?: boolean
 }
 
 export function MultiSelectMenuItemSelectAll(

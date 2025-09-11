@@ -22,7 +22,6 @@ export function useProducts(): UseProducts {
           startCursor
           endCursor
         }
-        totalCount
       }
     }
   `

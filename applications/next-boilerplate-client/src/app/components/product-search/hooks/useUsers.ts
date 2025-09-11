@@ -23,7 +23,6 @@ export function useUsers(): UseUsers {
           startCursor
           endCursor
         }
-        totalCount
       }
     }
   `

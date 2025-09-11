@@ -18,3 +18,10 @@ export interface Purchase {
   user: User
   product: Product
 }
+
+export type PageInfo = {
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+  startCursor: string | null
+  endCursor: string | null
+}

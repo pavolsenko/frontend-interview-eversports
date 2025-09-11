@@ -8,11 +8,11 @@ export const multiSelectStyles = (theme: Theme, isOpen: boolean): SxProps => ({
   justifyContent: 'space-between',
   alignItems: 'center',
 
-  width: '370px',
   height: MENU_ITEM_HEIGHT,
 
   paddingLeft: theme.spacing(2),
-  margin: theme.spacing(2),
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(3),
 
   border:
     '1px solid ' +

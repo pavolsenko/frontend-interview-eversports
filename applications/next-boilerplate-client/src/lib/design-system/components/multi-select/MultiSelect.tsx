@@ -1,8 +1,7 @@
 import React, { useState, useRef, MouseEvent } from 'react'
-import { Box, Popover, IconButton, Typography, useTheme } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import { Box, Popover, Typography, useTheme } from '@mui/material'
 
+import { MultiSelectIcon } from '@/lib/design-system/components/multi-select/MultiSelectIcon'
 import { MultiSelectOptions } from '@/lib/design-system/components/multi-select/MultiSelectOptions'
 import { MultiSelectActionButtons } from '@/lib/design-system/components/multi-select/MultiSelectActionButtons'
 import { MultiSelectSearch } from '@/lib/design-system/components/multi-select/MultiSelectSearch'
@@ -18,12 +17,13 @@ export interface MultiSelectOption {
 }
 
 interface MultiSelectProps {
-  options: MultiSelectOption[]
+  options: MultiSelectOption[] | undefined
   onSelect: (selectedValues: string[]) => void
   selectedOptions?: string[]
   label: string
   selectedLabel: string
   selectedLabelMulti: string
+  isLoading?: boolean
 }
 
 export default function MultiSelect(props: Readonly<MultiSelectProps>) {
@@ -38,6 +38,10 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   const theme = useTheme()
 
   function openPopover(event: MouseEvent<HTMLElement>) {
+    if (props.isLoading) {
+      return
+    }
+
     popoverRef.current = selectedOptions
     setAnchorEl(event.currentTarget)
     setSearch('')
@@ -74,6 +78,10 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   }
 
   function filteredOptions() {
+    if (!props.options) {
+      return []
+    }
+
     return props.options.filter((option: MultiSelectOption): boolean =>
       option.name.toLowerCase().includes(search.toLowerCase()),
     )
@@ -93,11 +101,13 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
 
   return (
     <>
+      <Box>
+        {props.selectedLabelMulti[0].toUpperCase() +
+          props.selectedLabelMulti.slice(1)}
+      </Box>
       <Box onClick={openPopover} sx={multiSelectStyles(theme, isOpen)}>
         <Typography variant="body2">{getLabel()}</Typography>
-        <IconButton color="inherit">
-          {anchorEl ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </IconButton>
+        <MultiSelectIcon isOpen={Boolean(anchorEl)} />
       </Box>
 
       <Popover

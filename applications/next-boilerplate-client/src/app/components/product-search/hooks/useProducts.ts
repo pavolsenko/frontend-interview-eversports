@@ -12,16 +12,17 @@ export function useProducts(): UseProducts {
   const PRODUCTS_QUERY = gql`
     query Products($first: Int) {
       products(first: $first) {
+        nodes {
+          id
+          name
+        }
         pageInfo {
           hasNextPage
           hasPreviousPage
           startCursor
           endCursor
         }
-        nodes {
-          id
-          name
-        }
+        totalCount
       }
     }
   `

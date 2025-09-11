@@ -12,17 +12,18 @@ export function useUsers(): UseUsers {
   const USERS_QUERY = gql`
     query Users($first: Int) {
       users(first: $first) {
+        nodes {
+          id
+          firstName
+          lastName
+        }
         pageInfo {
           hasNextPage
           hasPreviousPage
           startCursor
           endCursor
         }
-        nodes {
-          id
-          firstName
-          lastName
-        }
+        totalCount
       }
     }
   `

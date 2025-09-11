@@ -111,6 +111,7 @@ const typeDefs = gql`
   type PurchaseConnection {
     nodes: [Purchase!]!
     pageInfo: PageInfo!
+    totalCount: Int!
   }
 
   type ProductConnection {
@@ -234,6 +235,7 @@ const resolvers = {
           startCursor: paginatedProducts[0]?.id,
           endCursor: paginatedProducts[paginatedProducts.length - 1]?.id,
         },
+        totalCount: filteredProducts.length,
       }
     },
     users: async (
@@ -304,6 +306,7 @@ const resolvers = {
           startCursor: paginatedUsers[0]?.id,
           endCursor: paginatedUsers[paginatedUsers.length - 1]?.id,
         },
+        totalCount: filteredUsers.length,
       }
     },
     purchases: async (
@@ -372,6 +375,7 @@ const resolvers = {
           startCursor: paginatedPurchases[0]?.id,
           endCursor: paginatedPurchases[paginatedPurchases.length - 1]?.id,
         },
+        totalCount: filteredPurchases.length,
       }
     },
   },

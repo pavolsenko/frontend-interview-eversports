@@ -1,4 +1,7 @@
 import { HttpLink } from '@apollo/client'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { __DEV__ } from '@apollo/client/utilities/globals'
+
 import {
   registerApolloClient,
   ApolloClient,
@@ -13,3 +16,9 @@ export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
     }),
   })
 })
+
+if (__DEV__) {
+  // Adds messages only in a dev environment
+  loadDevMessages()
+  loadErrorMessages()
+}

@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, useTheme } from '@mui/material'
-import { useState, ChangeEvent } from 'react'
+import { useState } from 'react'
 
 import { Product, Purchase, User } from '@/app/app.types'
 import { useProducts } from '@/app/components/product-search/hooks/useProducts'
@@ -16,15 +16,16 @@ export function ProductSearch() {
   const theme = useTheme()
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([])
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([])
-  const [page, setPage] = useState<number>(1)
 
   const { data: usersData, isLoading: isLoadingUsers } = useUsers()
   const { data: productsData, isLoading: isLoadingProducts } = useProducts()
-  const { data, totalCount } = usePurchases(
-    selectedUserIds,
-    selectedProductIds,
-    page,
-  )
+  const {
+    data,
+    hasMore,
+    fetchMore,
+    isLoading: isLoadingPurchases,
+    isFetchingMore,
+  } = usePurchases(selectedUserIds, selectedProductIds)
 
   function onSelectUsers(value: string[]) {
     setSelectedUserIds(value)
@@ -32,10 +33,6 @@ export function ProductSearch() {
 
   function onSelectProducts(value: string[]) {
     setSelectedProductIds(value)
-  }
-
-  function onPageChange(event: ChangeEvent<unknown>, page: number) {
-    setPage(page)
   }
 
   return (
@@ -79,9 +76,10 @@ export function ProductSearch() {
 
       <ProductGrid
         products={data?.map((purchase: Purchase): Product => purchase.product)}
-        page={page}
-        totalCount={totalCount}
-        onPageChange={onPageChange}
+        hasMore={hasMore}
+        isLoading={isLoadingPurchases}
+        isFetchingMore={isFetchingMore}
+        onMoreClick={fetchMore}
       />
     </Box>
   )

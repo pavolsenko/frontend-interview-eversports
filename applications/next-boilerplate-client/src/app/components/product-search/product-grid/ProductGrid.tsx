@@ -1,38 +1,52 @@
-import { DEFAULT_PAGE_SIZE } from '@/app/config/query'
-import { ChangeEvent } from 'react'
-import { Box, Grid, Pagination } from '@mui/material'
+import { Box, CircularProgress, Grid } from '@mui/material'
 
 import { Product } from '@/app/app.types'
+import { FetchMoreButton } from '@/app/components/product-search/product-grid/FetchMoreButton'
 import { ProductItem } from '@/app/components/product-search/product-grid/ProductItem'
 
 interface ProductGridProps {
   products: Product[] | undefined
-  page: number
-  onPageChange: (event: ChangeEvent<unknown>, page: number) => void
-  totalCount?: number
+  hasMore: boolean
+  onMoreClick: () => void
   isLoading?: boolean
+  isFetchingMore?: boolean
 }
 
 export function ProductGrid(props: Readonly<ProductGridProps>) {
+  if (props.isLoading) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    )
+  }
+
   if (!props.products) {
-    return null
+    return <Box>No results</Box>
   }
 
   return (
-    <Box>
-      <Grid container>
+    <>
+      <Grid container columnSpacing={2} rowSpacing={2}>
         {props.products.map((product: Product) => (
-          <ProductItem product={product} key={product.id} />
+          <Grid
+            key={product.id}
+            size={{
+              xs: 12,
+              md: 6,
+              lg: 3,
+              xl: 2,
+            }}
+          >
+            <ProductItem product={product} />
+          </Grid>
         ))}
       </Grid>
-      <Pagination
-        page={props.page}
-        count={
-          props.totalCount ? Math.ceil(props.totalCount / DEFAULT_PAGE_SIZE) : 1
-        }
-        variant={'outlined'}
-        onChange={props.onPageChange}
+      <FetchMoreButton
+        hasMore={props.hasMore}
+        isLoading={props.isFetchingMore}
+        onMoreClick={props.onMoreClick}
       />
-    </Box>
+    </>
   )
 }

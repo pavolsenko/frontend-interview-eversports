@@ -10,7 +10,7 @@ import {
 
 interface MultiSelectMenuItemProps {
   option: MultiSelectOption
-  isChecked: boolean
+  isChecked?: boolean
   onItemClick: (id: string) => void
 }
 

@@ -16,9 +16,13 @@ export function ProductSearch() {
   const theme = useTheme()
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([])
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([])
+  const [userSearchTerm, setUserSearchTerm] = useState<string>('')
+  const [productSearchTerm, setProductSearchTerm] = useState<string>('')
 
-  const { data: usersData, isLoading: isLoadingUsers } = useUsers()
-  const { data: productsData, isLoading: isLoadingProducts } = useProducts()
+  const { data: usersData, isLoading: isLoadingUsers } =
+    useUsers(userSearchTerm)
+  const { data: productsData, isLoading: isLoadingProducts } =
+    useProducts(productSearchTerm)
   const {
     data,
     hasMore,
@@ -42,6 +46,7 @@ export function ProductSearch() {
           <MultiSelect
             label={'Select Product'}
             onSelect={onSelectProducts}
+            onSearch={(searchTerm: string) => setProductSearchTerm(searchTerm)}
             selectedOptions={selectedProductIds}
             selectedLabel={'product'}
             selectedLabelMulti={'products'}
@@ -59,6 +64,7 @@ export function ProductSearch() {
           <MultiSelect
             label={'Select User'}
             onSelect={onSelectUsers}
+            onSearch={(searchTerm: string) => setUserSearchTerm(searchTerm)}
             selectedOptions={selectedUserIds}
             selectedLabel={'user'}
             selectedLabelMulti={'users'}

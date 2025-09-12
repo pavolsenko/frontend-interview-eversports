@@ -8,10 +8,10 @@ interface UseProducts {
   isLoading: boolean
 }
 
-export function useProducts(): UseProducts {
+export function useProducts(searchTerm: string): UseProducts {
   const PRODUCTS_QUERY = gql`
-    query Products($first: Int) {
-      products(first: $first) {
+    query Products($first: Int, $searchTerm: String) {
+      products(first: $first, searchTerm: $searchTerm) {
         nodes {
           id
           name
@@ -27,7 +27,7 @@ export function useProducts(): UseProducts {
   `
 
   const { data, loading } = useQuery(PRODUCTS_QUERY, {
-    variables: { first: DEFAULT_PAGE_SIZE },
+    variables: { first: DEFAULT_PAGE_SIZE, searchTerm },
   })
 
   return {

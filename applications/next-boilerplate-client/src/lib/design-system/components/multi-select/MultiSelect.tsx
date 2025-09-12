@@ -19,6 +19,7 @@ export interface MultiSelectOption {
 interface MultiSelectProps {
   options: MultiSelectOption[] | undefined
   onSelect: (selectedValues: string[]) => void
+  onSearch: (searchTerm: string) => void
   selectedOptions?: string[]
   label: string
   selectedLabel: string
@@ -32,7 +33,6 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
     props.selectedOptions || [],
   )
-  const [search, setSearch] = useState<string>('')
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const popoverRef = useRef<string[]>([])
   const theme = useTheme()
@@ -44,7 +44,6 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
 
     popoverRef.current = selectedOptions
     setAnchorEl(event.currentTarget)
-    setSearch('')
     setIsOpen(true)
     setPopoverWidth(
       Math.round(event.currentTarget.getBoundingClientRect().width),
@@ -75,16 +74,6 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   function onCancelClick() {
     setSelectedOptions(props.selectedOptions || [])
     closePopover()
-  }
-
-  function filteredOptions() {
-    if (!props.options) {
-      return []
-    }
-
-    return props.options.filter((option: MultiSelectOption): boolean =>
-      option.name.toLowerCase().includes(search.toLowerCase()),
-    )
   }
 
   function getLabel() {
@@ -122,13 +111,14 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
           },
         }}
       >
-        <MultiSelectSearch searchTerm={search} setSearchTerm={setSearch} />
+        <MultiSelectSearch setSearchTerm={props.onSearch} />
 
         <MultiSelectOptions
-          options={filteredOptions()}
+          options={props.options || []}
           selectedOptions={selectedOptions}
           onItemClick={onItemClick}
           onSelectMultiple={onSelectMultiple}
+          isLoading={props.isLoading}
         />
 
         <MultiSelectActionButtons

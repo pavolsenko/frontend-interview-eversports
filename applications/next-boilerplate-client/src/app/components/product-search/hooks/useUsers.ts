@@ -8,10 +8,10 @@ interface UseUsers {
   isLoading: boolean
 }
 
-export function useUsers(): UseUsers {
+export function useUsers(searchTerm: string): UseUsers {
   const USERS_QUERY = gql`
-    query Users($first: Int) {
-      users(first: $first) {
+    query Users($first: Int, $searchTerm: String) {
+      users(first: $first, searchTerm: $searchTerm) {
         nodes {
           id
           firstName
@@ -28,7 +28,7 @@ export function useUsers(): UseUsers {
   `
 
   const { data, loading } = useQuery(USERS_QUERY, {
-    variables: { first: DEFAULT_PAGE_SIZE },
+    variables: { first: DEFAULT_PAGE_SIZE, searchTerm },
   })
 
   return {

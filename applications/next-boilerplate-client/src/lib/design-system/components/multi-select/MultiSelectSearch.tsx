@@ -5,12 +5,13 @@ import SearchIcon from '@mui/icons-material/Search'
 import { multiSelectItemStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'
 
 interface MultiSelectSearchProps {
+  searchTerm: string
   setSearchTerm: (searchTerm: string) => void
 }
 
 export function MultiSelectSearch(props: Readonly<MultiSelectSearchProps>) {
   const theme = useTheme()
-  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [searchTerm, setSearchTerm] = useState<string>(props.searchTerm)
 
   useEffect(() => {
     const handler = setTimeout(() => {

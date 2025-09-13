@@ -15,26 +15,11 @@ interface MultiSelectOptionsProps {
   options?: MultiSelectOption[]
   selectedOptions?: string[]
   onItemClick: (id: string) => void
-  onSelectMultiple: (ids: string[]) => void
+  onSelectAllClick: () => void
   isLoading?: boolean
 }
 
 export function MultiSelectOptions(props: Readonly<MultiSelectOptionsProps>) {
-  function onSelectAllClick() {
-    if (!props.options || !props.selectedOptions) {
-      return
-    }
-
-    if (props.selectedOptions.length === props.options.length) {
-      props.onSelectMultiple([])
-      return
-    }
-
-    props.onSelectMultiple(
-      props.options.map((option: MultiSelectOption): string => option.id),
-    )
-  }
-
   function isChecked(): boolean {
     if (!props.options || !props.selectedOptions) {
       return false
@@ -69,7 +54,7 @@ export function MultiSelectOptions(props: Readonly<MultiSelectOptionsProps>) {
   return (
     <Box sx={multiSelectOptionsWrapperStyles}>
       <MultiSelectMenuItemSelectAll
-        onClick={onSelectAllClick}
+        onClick={props.onSelectAllClick}
         isChecked={isChecked()}
         isIndeterminate={isIndeterminate()}
       />

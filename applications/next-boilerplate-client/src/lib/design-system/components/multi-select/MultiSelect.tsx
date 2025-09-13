@@ -1,4 +1,4 @@
-import React, { useState, useRef, MouseEvent } from 'react'
+import React, { useState, MouseEvent } from 'react'
 import { Box, Popover, Typography, useTheme } from '@mui/material'
 
 import { MultiSelectIcon } from '@/lib/design-system/components/multi-select/MultiSelectIcon'
@@ -17,24 +17,25 @@ export interface MultiSelectOption {
 }
 
 interface MultiSelectProps {
-  options: MultiSelectOption[] | undefined
+  options: MultiSelectOption[]
   onSelect: (selectedValues: string[]) => void
+  searchTerm: string
   onSearch: (searchTerm: string) => void
-  selectedOptions?: string[]
+  selectedOptions: string[]
   label: string
   selectedLabel: string
   selectedLabelMulti: string
   isLoading?: boolean
+  onClear: () => void
 }
 
 export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [popoverWidth, setPopoverWidth] = useState<number>(0)
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    props.selectedOptions || [],
+    props.selectedOptions,
   )
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const popoverRef = useRef<string[]>([])
   const theme = useTheme()
 
   function openPopover(event: MouseEvent<HTMLElement>) {
@@ -42,7 +43,6 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
       return
     }
 
-    popoverRef.current = selectedOptions
     setAnchorEl(event.currentTarget)
     setIsOpen(true)
     setPopoverWidth(
@@ -56,23 +56,35 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   }
 
   function onItemClick(id: string) {
-    popoverRef.current = popoverRef.current.includes(id)
-      ? popoverRef.current.filter((item: string): boolean => item !== id)
-      : [...popoverRef.current, id]
-    setSelectedOptions([...popoverRef.current])
+    setSelectedOptions((previousOptions: string[]): string[] =>
+      previousOptions.includes(id)
+        ? previousOptions.filter((option: string): boolean => option !== id)
+        : [...previousOptions, id],
+    )
   }
 
-  function onSelectMultiple(ids: string[]) {
-    setSelectedOptions([...popoverRef.current, ...ids])
+  function onSelectAllClick() {
+    if (!props.options) {
+      return
+    }
+
+    if (props.options.length === selectedOptions.length) {
+      setSelectedOptions([])
+      return
+    }
+
+    setSelectedOptions(
+      props.options.map((option: MultiSelectOption): string => option.id),
+    )
   }
 
   function onApplyClick() {
-    props.onSelect(popoverRef.current)
+    props.onSelect(selectedOptions)
     closePopover()
   }
 
   function onCancelClick() {
-    setSelectedOptions(props.selectedOptions || [])
+    setSelectedOptions(props.selectedOptions)
     closePopover()
   }
 
@@ -88,15 +100,27 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
     } selected`
   }
 
+  function onClearClick(event: MouseEvent<HTMLElement>) {
+    event.preventDefault()
+    event.stopPropagation()
+    setSelectedOptions([])
+    props.onClear()
+  }
+
   return (
     <>
       <Box>
         {props.selectedLabelMulti[0].toUpperCase() +
           props.selectedLabelMulti.slice(1)}
       </Box>
+
       <Box onClick={openPopover} sx={multiSelectStyles(theme, isOpen)}>
         <Typography variant="body2">{getLabel()}</Typography>
-        <MultiSelectIcon isOpen={Boolean(anchorEl)} />
+        <MultiSelectIcon
+          isOpen={Boolean(anchorEl)}
+          isClearable={props.selectedOptions.length > 0}
+          onClearClick={onClearClick}
+        />
       </Box>
 
       <Popover
@@ -106,18 +130,19 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         slotProps={{
-          paper: {
-            sx: multiSelectPopoverStyles(theme, popoverWidth),
-          },
+          paper: { sx: multiSelectPopoverStyles(theme, popoverWidth) },
         }}
       >
-        <MultiSelectSearch setSearchTerm={props.onSearch} />
+        <MultiSelectSearch
+          searchTerm={props.searchTerm}
+          setSearchTerm={props.onSearch}
+        />
 
         <MultiSelectOptions
-          options={props.options || []}
+          options={props.options}
           selectedOptions={selectedOptions}
           onItemClick={onItemClick}
-          onSelectMultiple={onSelectMultiple}
+          onSelectAllClick={onSelectAllClick}
           isLoading={props.isLoading}
         />
 

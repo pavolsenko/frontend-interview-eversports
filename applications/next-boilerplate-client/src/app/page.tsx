@@ -4,12 +4,12 @@ import { ThemeProvider } from '@mui/material'
 
 import { theme } from '@/lib/design-system/theme/theme'
 
-import { ProductSearch } from '@/app/components/product-search/ProductSearch'
+import { PurchasesSearch } from '@/app/components/product-search/PurchasesSearch'
 
 export default function Home() {
   return (
     <ThemeProvider theme={theme}>
-      <ProductSearch />
+      <PurchasesSearch />
     </ThemeProvider>
   )
 }

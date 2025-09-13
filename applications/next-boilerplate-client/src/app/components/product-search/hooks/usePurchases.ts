@@ -1,5 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
+
 import { Purchase } from '@/app/app.types'
 import { DEFAULT_PAGE_SIZE } from '@/app/config/query'
 

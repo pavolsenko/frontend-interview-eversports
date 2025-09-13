@@ -89,12 +89,12 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   }
 
   function getLabel() {
-    if (!selectedOptions.length) {
+    if (!props.selectedOptions.length) {
       return props.label
     }
 
-    return `${selectedOptions.length} ${
-      selectedOptions.length === 1
+    return `${props.selectedOptions.length} ${
+      props.selectedOptions.length === 1
         ? props.selectedLabel
         : props.selectedLabelMulti
     } selected`

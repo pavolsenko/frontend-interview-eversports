@@ -12,7 +12,7 @@ import MultiSelect, {
 
 import { purchasesSearchWrapperStyles } from '@/app/components/product-search/purchasesSearchStyles'
 
-export function ProductSearch() {
+export function PurchasesSearch() {
   const theme = useTheme()
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([])
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([])

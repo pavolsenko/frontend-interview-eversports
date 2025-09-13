@@ -14,7 +14,8 @@
   "scripts": {
     "prepare": "husky",
     "dev:client": "npm run dev --workspace=@frontend-interview/next-boilerplate-client",
-    "dev:server": "npm run dev --workspace=@frontend-interview/graphql-server"
+    "dev:server": "npm run dev --workspace=@frontend-interview/graphql-server",
+    "test:client": "npm run test --workspace=@frontend-interview/next-boilerplate-client"
   },
   "prettier": {
     "trailingComma": "all",

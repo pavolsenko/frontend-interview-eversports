@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, useTheme } from '@mui/material'
+import { Box, Button, Divider, Grid, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 import { Product, Purchase, User } from '@/app/app.types'
@@ -19,17 +19,33 @@ export function PurchasesSearch() {
   const [userSearchTerm, setUserSearchTerm] = useState<string>('')
   const [productSearchTerm, setProductSearchTerm] = useState<string>('')
 
-  const { data: usersData, isLoading: isLoadingUsers } =
-    useUsers(userSearchTerm)
-  const { data: productsData, isLoading: isLoadingProducts } =
-    useProducts(productSearchTerm)
+  const {
+    data: usersData,
+    isLoading: isLoadingUsers,
+    isError: isErrorUsers,
+  } = useUsers(userSearchTerm)
+  const {
+    data: productsData,
+    isLoading: isLoadingProducts,
+    isError: isErrorProducts,
+  } = useProducts(productSearchTerm)
   const {
     data,
     hasMore,
     fetchMore,
     isLoading: isLoadingPurchases,
+    isError: isErrorPurchases,
     isFetchingMore,
   } = usePurchases(selectedUserIds, selectedProductIds)
+
+  if (isErrorUsers || isErrorProducts || isErrorPurchases) {
+    return (
+      <Box sx={purchasesSearchWrapperStyles(theme)}>
+        <Typography variant={'h4'}>Sorry, something went wrong.</Typography>
+        <Button onClick={() => window.location.reload()}>Reload</Button>
+      </Box>
+    )
+  }
 
   return (
     <Box sx={purchasesSearchWrapperStyles(theme)}>

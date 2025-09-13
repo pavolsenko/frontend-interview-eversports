@@ -7,6 +7,7 @@ import { DEFAULT_PURCHASES_PAGE_SIZE } from '@/app/config/query'
 interface UsePurchases {
   data: Purchase[]
   isLoading: boolean
+  isError: boolean
   hasMore: boolean
   fetchMore: () => Promise<void>
   isFetchingMore: boolean
@@ -55,7 +56,7 @@ export function usePurchases(
     }
   `
 
-  const { data, loading, fetchMore } = useQuery(PURCHASES_QUERY, {
+  const { data, loading, fetchMore, error } = useQuery(PURCHASES_QUERY, {
     variables: { first: DEFAULT_PURCHASES_PAGE_SIZE, userIds, productIds },
     fetchPolicy: 'cache-and-network',
   })
@@ -96,6 +97,7 @@ export function usePurchases(
   return {
     data: data?.purchases.nodes || [],
     isLoading: loading,
+    isError: Boolean(error),
     isFetchingMore: isFetching,
     hasMore: data?.purchases.pageInfo?.hasNextPage || false,
     fetchMore: fetchNext,

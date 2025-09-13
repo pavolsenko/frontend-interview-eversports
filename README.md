@@ -50,4 +50,7 @@ By default the page size is set to 24 since that's
 
 broken images were replaced with an icon
 
-as a bonus I've added unit tests using jest
+Bonus features :)
+
+- added unit tests using jest
+- added aria labels to icon buttons without labels

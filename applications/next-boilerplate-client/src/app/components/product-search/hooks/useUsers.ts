@@ -6,6 +6,7 @@ import { User } from '@/app/app.types'
 interface UseUsers {
   data: User[]
   isLoading: boolean
+  isError: boolean
 }
 
 export function useUsers(searchTerm: string): UseUsers {
@@ -27,12 +28,13 @@ export function useUsers(searchTerm: string): UseUsers {
     }
   `
 
-  const { data, loading } = useQuery(USERS_QUERY, {
+  const { data, loading, error } = useQuery(USERS_QUERY, {
     variables: { first: DEFAULT_PAGE_SIZE, searchTerm },
   })
 
   return {
     data: data?.users?.nodes || [],
     isLoading: loading,
+    isError: Boolean(error),
   }
 }

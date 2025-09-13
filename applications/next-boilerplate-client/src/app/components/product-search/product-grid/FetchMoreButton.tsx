@@ -22,6 +22,7 @@ export function FetchMoreButton(props: FetchMoreButtonProps) {
         size={'large'}
         onClick={props.onMoreClick}
         disabled={props.isLoading}
+        data-testid={'fetch-more-button'}
       >
         {props.isLoading ? (
           <CircularProgress color={'inherit'} size={18} />

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Checkbox, ListItemText, MenuItem, useTheme } from '@mui/material'
 
 import { MultiSelectOption } from '@/lib/design-system/components/multi-select/MultiSelect'
@@ -21,6 +20,7 @@ export function MultiSelectMenuItem(props: Readonly<MultiSelectMenuItemProps>) {
     <MenuItem
       onClick={() => props.onItemClick(props.option.id)}
       sx={multiSelectItemStyles(theme)}
+      data-testid={'option-' + props.option.id}
     >
       <Checkbox checked={props.isChecked} />
       <ListItemText

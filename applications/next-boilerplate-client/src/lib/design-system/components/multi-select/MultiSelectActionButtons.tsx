@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Button, useTheme } from '@mui/material'
 
 import { multiSelectActionButtonsStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'

@@ -14,12 +14,16 @@ interface ProductItemProps {
 
 export function ProductItem(props: Readonly<ProductItemProps>) {
   return (
-    <Box key={props.product.id} sx={productItemStyles}>
+    <Box
+      key={props.product.id}
+      sx={productItemStyles}
+      data-testid={'product-item-' + props.product.id}
+    >
       <ProductImage
         imageUrl={props.product.imageUrl}
         alt={props.product.name}
       />
-      <Typography variant="body1" sx={productItemTextStyles}>
+      <Typography variant={'body1'} sx={productItemTextStyles}>
         {props.product.name}
       </Typography>
     </Box>

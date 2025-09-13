@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react'
+import { useState, MouseEvent } from 'react'
 import { Box, Popover, Typography, useTheme } from '@mui/material'
 
 import { MultiSelectIcon } from '@/lib/design-system/components/multi-select/MultiSelectIcon'

@@ -1,5 +1,4 @@
 import { Checkbox, ListItemText, MenuItem, useTheme } from '@mui/material'
-import React from 'react'
 
 import {
   multiSelectItemStyles,
@@ -22,6 +21,7 @@ export function MultiSelectMenuItemSelectAll(
       <Checkbox
         checked={props.isChecked}
         indeterminate={props.isIndeterminate}
+        data-testid={'select-all-checkbox'}
       />
       <ListItemText
         primary="Select All"

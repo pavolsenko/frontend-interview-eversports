@@ -1,4 +1,10 @@
-import { Box, CircularProgress, Grid, useTheme } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Typography,
+  useTheme,
+} from '@mui/material'
 
 import { Product } from '@/app/app.types'
 import { FetchMoreButton } from '@/app/components/product-search/product-grid/FetchMoreButton'
@@ -6,6 +12,7 @@ import { ProductItem } from '@/app/components/product-search/product-grid/Produc
 
 import {
   productGridLoadingStyles,
+  productGridNoResultsStyles,
   productGridStyles,
 } from '@/app/components/product-search/product-grid/productGridStyles'
 
@@ -28,8 +35,12 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
     )
   }
 
-  if (!props.products) {
-    return <Box>No results</Box>
+  if (!props.products || props.products.length === 0) {
+    return (
+      <Typography variant={'h4'} sx={productGridNoResultsStyles}>
+        No results
+      </Typography>
+    )
   }
 
   return (

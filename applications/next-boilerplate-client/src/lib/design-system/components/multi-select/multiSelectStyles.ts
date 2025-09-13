@@ -41,7 +41,6 @@ export const multiSelectItemStyles = (
 ): SxProps => ({
   display: 'flex',
   alignItems: 'center',
-  width: '100%',
   height: MENU_ITEM_HEIGHT,
   paddingX: theme.spacing(2),
   paddingLeft: theme.spacing(1),

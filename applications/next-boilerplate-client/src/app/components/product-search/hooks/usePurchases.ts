@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
 
 import { Purchase } from '@/app/app.types'
-import { DEFAULT_PAGE_SIZE } from '@/app/config/query'
+import { DEFAULT_PURCHASES_PAGE_SIZE } from '@/app/config/query'
 
 interface UsePurchases {
   data: Purchase[]
@@ -56,7 +56,7 @@ export function usePurchases(
   `
 
   const { data, loading, fetchMore } = useQuery(PURCHASES_QUERY, {
-    variables: { first: DEFAULT_PAGE_SIZE, userIds, productIds },
+    variables: { first: DEFAULT_PURCHASES_PAGE_SIZE, userIds, productIds },
     fetchPolicy: 'cache-and-network',
   })
 
@@ -68,7 +68,7 @@ export function usePurchases(
     setIsFetching(true)
     await fetchMore({
       variables: {
-        first: DEFAULT_PAGE_SIZE,
+        first: DEFAULT_PURCHASES_PAGE_SIZE,
         after: data.purchases.pageInfo.endCursor,
         userIds,
         productIds,

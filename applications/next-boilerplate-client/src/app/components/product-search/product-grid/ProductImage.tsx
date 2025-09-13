@@ -19,7 +19,10 @@ export function ProductImage(props: ProductImageProps) {
 
   if (!props.imageUrl || hasError) {
     return (
-      <Box sx={productItemImageErrorStyles(theme)}>
+      <Box
+        sx={productItemImageErrorStyles(theme)}
+        data-testid={'broken-image-icon'}
+      >
         <BrokenImageIcon fontSize="large" />
       </Box>
     )

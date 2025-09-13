@@ -18,15 +18,15 @@ export interface MultiSelectOption {
 
 interface MultiSelectProps {
   options: MultiSelectOption[]
+  selectedOptions: string[]
   onSelect: (selectedValues: string[]) => void
+  onClear: () => void
   searchTerm: string
   onSearch: (searchTerm: string) => void
-  selectedOptions: string[]
   label: string
   selectedLabel: string
   selectedLabelMulti: string
   isLoading?: boolean
-  onClear: () => void
 }
 
 export default function MultiSelect(props: Readonly<MultiSelectProps>) {
@@ -39,10 +39,6 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
   const theme = useTheme()
 
   function openPopover(event: MouseEvent<HTMLElement>) {
-    if (props.isLoading) {
-      return
-    }
-
     setAnchorEl(event.currentTarget)
     setIsOpen(true)
     setPopoverWidth(
@@ -115,8 +111,9 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
       </Box>
 
       <Box onClick={openPopover} sx={multiSelectStyles(theme, isOpen)}>
-        <Typography variant="body2">{getLabel()}</Typography>
+        <Typography variant={'body2'}>{getLabel()}</Typography>
         <MultiSelectIcon
+          label={props.label}
           isOpen={Boolean(anchorEl)}
           isClearable={props.selectedOptions.length > 0}
           onClearClick={onClearClick}

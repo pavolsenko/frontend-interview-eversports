@@ -42,7 +42,7 @@ export function MultiSelectOptions(props: Readonly<MultiSelectOptionsProps>) {
   if (props.isLoading) {
     return (
       <Box sx={multiSelectNoOptionsStyles}>
-        <CircularProgress color={'inherit'} size={24} />
+        <CircularProgress size={24} />
       </Box>
     )
   }

@@ -78,10 +78,10 @@ export function PurchasesSearch() {
 
       <ProductGrid
         products={data?.map((purchase: Purchase): Product => purchase.product)}
-        hasMore={hasMore}
         isLoading={isLoadingPurchases}
-        isFetchingMore={isFetchingMore}
+        hasMore={hasMore}
         onMoreClick={fetchMore}
+        isFetchingMore={isFetchingMore}
       />
     </Box>
   )

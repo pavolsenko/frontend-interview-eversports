@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, useEffect } from 'react'
-import { Box, InputBase, useTheme } from '@mui/material'
+import { Box, InputBase, IconButton, useTheme } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { multiSelectItemStyles } from '@/lib/design-system/components/multi-select/multiSelectStyles'
 
@@ -25,6 +26,11 @@ export function MultiSelectSearch(props: Readonly<MultiSelectSearchProps>) {
     setSearchTerm(event.target.value)
   }
 
+  function onClear() {
+    setSearchTerm('')
+    props.setSearchTerm('')
+  }
+
   return (
     <Box sx={multiSelectItemStyles(theme, true)}>
       <SearchIcon fontSize="small" style={{ marginLeft: '10px' }} />
@@ -35,6 +41,11 @@ export function MultiSelectSearch(props: Readonly<MultiSelectSearchProps>) {
         sx={{ marginLeft: '20px' }}
         fullWidth
       />
+      {searchTerm ? (
+        <IconButton onClick={onClear} aria-label="Clear search">
+          <CloseIcon />
+        </IconButton>
+      ) : null}
     </Box>
   )
 }

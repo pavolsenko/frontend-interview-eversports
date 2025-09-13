@@ -6,9 +6,14 @@ export const productGridStyles = (theme: Theme): SxProps => ({
 
 export const productGridLoadingStyles: SxProps = {
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'center',
-  marginTop: '40%',
+  marginTop: '10%',
+}
+
+export const productGridNoResultsStyles: SxProps = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '10%',
 }
 
 export const productItemStyles: SxProps = {

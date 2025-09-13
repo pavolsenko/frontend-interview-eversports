@@ -1,6 +1,12 @@
+import { Box, Typography } from '@mui/material'
+
 import { Product } from '@/app/app.types'
 import { ProductImage } from '@/app/components/product-search/product-grid/ProductImage'
-import { Box, Typography } from '@mui/material'
+
+import {
+  productItemStyles,
+  productItemTextStyles,
+} from '@/app/components/product-search/product-grid/productGridStyles'
 
 interface ProductItemProps {
   product: Product
@@ -8,20 +14,14 @@ interface ProductItemProps {
 
 export function ProductItem(props: Readonly<ProductItemProps>) {
   return (
-    <Box
-      key={props.product.id}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 1,
-        width: '100%',
-      }}
-    >
+    <Box key={props.product.id} sx={productItemStyles}>
       <ProductImage
         imageUrl={props.product.imageUrl}
         alt={props.product.name}
       />
-      <Typography variant="body1">{props.product.name}</Typography>
+      <Typography variant="body1" sx={productItemTextStyles}>
+        {props.product.name}
+      </Typography>
     </Box>
   )
 }

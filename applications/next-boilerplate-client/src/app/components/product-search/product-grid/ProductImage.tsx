@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import { Box, useTheme } from '@mui/material'
 import BrokenImageIcon from '@mui/icons-material/BrokenImage'
-import { Box } from '@mui/material'
+
+import {
+  productItemImageErrorStyles,
+  productItemImageStyles,
+} from '@/app/components/product-search/product-grid/productGridStyles'
 
 interface ProductImageProps {
   imageUrl?: string
@@ -10,36 +15,18 @@ interface ProductImageProps {
 
 export function ProductImage(props: ProductImageProps) {
   const [hasError, setHasError] = useState(false)
+  const theme = useTheme()
 
   if (!props.imageUrl || hasError) {
     return (
-      <Box
-        sx={{
-          width: '100%',
-          aspectRatio: '1 / 1',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'black',
-          color: 'white',
-          borderRadius: 2,
-        }}
-      >
+      <Box sx={productItemImageErrorStyles(theme)}>
         <BrokenImageIcon fontSize="large" />
       </Box>
     )
   }
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        aspectRatio: '1 / 1',
-        position: 'relative',
-        borderRadius: 2,
-        overflow: 'hidden',
-      }}
-    >
+    <Box sx={productItemImageStyles(theme)}>
       <Image
         src={props.imageUrl}
         alt={props.alt}

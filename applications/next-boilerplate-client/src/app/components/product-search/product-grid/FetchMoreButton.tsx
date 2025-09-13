@@ -1,4 +1,6 @@
-import { Box, Button, CircularProgress } from '@mui/material'
+import { Box, Button, CircularProgress, useTheme } from '@mui/material'
+
+import { productGridFetchMoreStyles } from '@/app/components/product-search/product-grid/productGridStyles'
 
 interface FetchMoreButtonProps {
   hasMore: boolean
@@ -7,12 +9,14 @@ interface FetchMoreButtonProps {
 }
 
 export function FetchMoreButton(props: FetchMoreButtonProps) {
+  const theme = useTheme()
+
   if (!props.hasMore) {
     return null
   }
 
   return (
-    <Box>
+    <Box sx={productGridFetchMoreStyles(theme)}>
       <Button
         variant={'contained'}
         size={'large'}
@@ -20,7 +24,7 @@ export function FetchMoreButton(props: FetchMoreButtonProps) {
         disabled={props.isLoading}
       >
         {props.isLoading ? (
-          <CircularProgress color={'inherit'} size={24} />
+          <CircularProgress color={'inherit'} size={18} />
         ) : (
           'Get more'
         )}

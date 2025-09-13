@@ -1,8 +1,13 @@
-import { Box, CircularProgress, Grid } from '@mui/material'
+import { Box, CircularProgress, Grid, useTheme } from '@mui/material'
 
 import { Product } from '@/app/app.types'
 import { FetchMoreButton } from '@/app/components/product-search/product-grid/FetchMoreButton'
 import { ProductItem } from '@/app/components/product-search/product-grid/ProductItem'
+
+import {
+  productGridLoadingStyles,
+  productGridStyles,
+} from '@/app/components/product-search/product-grid/productGridStyles'
 
 interface ProductGridProps {
   products: Product[] | undefined
@@ -13,9 +18,11 @@ interface ProductGridProps {
 }
 
 export function ProductGrid(props: Readonly<ProductGridProps>) {
+  const theme = useTheme()
+
   if (props.isLoading) {
     return (
-      <Box>
+      <Box sx={productGridLoadingStyles}>
         <CircularProgress />
       </Box>
     )
@@ -26,7 +33,7 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
   }
 
   return (
-    <>
+    <Box sx={productGridStyles(theme)}>
       <Grid container columnSpacing={2} rowSpacing={2}>
         {props.products.map((product: Product) => (
           <Grid
@@ -47,6 +54,6 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
         isLoading={props.isFetchingMore}
         onMoreClick={props.onMoreClick}
       />
-    </>
+    </Box>
   )
 }

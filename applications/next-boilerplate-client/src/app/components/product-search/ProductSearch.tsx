@@ -31,26 +31,20 @@ export function ProductSearch() {
     isFetchingMore,
   } = usePurchases(selectedUserIds, selectedProductIds)
 
-  function onSelectUsers(value: string[]) {
-    setSelectedUserIds(value)
-  }
-
-  function onSelectProducts(value: string[]) {
-    setSelectedProductIds(value)
-  }
-
   return (
     <Box sx={purchasesSearchWrapperStyles(theme)}>
       <Grid container columnSpacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
           <MultiSelect
             label={'Select Product'}
-            onSelect={onSelectProducts}
+            onSelect={(ids: string[]) => setSelectedProductIds(ids)}
+            searchTerm={productSearchTerm}
             onSearch={(searchTerm: string) => setProductSearchTerm(searchTerm)}
             selectedOptions={selectedProductIds}
             selectedLabel={'product'}
             selectedLabelMulti={'products'}
             isLoading={isLoadingProducts}
+            onClear={() => setSelectedProductIds([])}
             options={productsData?.map(
               (product: Product): MultiSelectOption => ({
                 id: product.id,
@@ -63,12 +57,14 @@ export function ProductSearch() {
         <Grid size={{ xs: 12, md: 6 }}>
           <MultiSelect
             label={'Select User'}
-            onSelect={onSelectUsers}
+            onSelect={(ids: string[]) => setSelectedUserIds(ids)}
+            searchTerm={userSearchTerm}
             onSearch={(searchTerm: string) => setUserSearchTerm(searchTerm)}
             selectedOptions={selectedUserIds}
             selectedLabel={'user'}
             selectedLabelMulti={'users'}
             isLoading={isLoadingUsers}
+            onClear={() => setSelectedUserIds([])}
             options={usersData?.map(
               (user: User): MultiSelectOption => ({
                 id: user.id,

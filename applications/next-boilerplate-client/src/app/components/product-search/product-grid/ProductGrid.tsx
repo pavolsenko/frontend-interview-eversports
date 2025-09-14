@@ -17,7 +17,7 @@ import {
 } from '@/app/components/product-search/product-grid/productGridStyles'
 
 interface ProductGridProps {
-  products: Product[] | undefined
+  products: Product[]
   hasMore: boolean
   onMoreClick: () => void
   isLoading?: boolean
@@ -35,7 +35,7 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
     )
   }
 
-  if (!props.products || props.products.length === 0) {
+  if (props.products.length === 0) {
     return (
       <Typography variant={'h4'} sx={productGridNoResultsStyles}>
         No results

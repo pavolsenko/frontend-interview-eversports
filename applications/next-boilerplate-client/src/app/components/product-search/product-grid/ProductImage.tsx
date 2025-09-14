@@ -13,8 +13,8 @@ interface ProductImageProps {
   alt: string
 }
 
-export function ProductImage(props: ProductImageProps) {
-  const [hasError, setHasError] = useState(false)
+export function ProductImage(props: Readonly<ProductImageProps>) {
+  const [hasError, setHasError] = useState<boolean>(false)
   const theme = useTheme()
 
   if (!props.imageUrl || hasError) {
@@ -23,7 +23,7 @@ export function ProductImage(props: ProductImageProps) {
         sx={productItemImageErrorStyles(theme)}
         data-testid={'broken-image-icon'}
       >
-        <BrokenImageIcon fontSize="large" />
+        <BrokenImageIcon />
       </Box>
     )
   }

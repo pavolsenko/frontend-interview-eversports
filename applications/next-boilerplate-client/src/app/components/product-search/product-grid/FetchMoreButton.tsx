@@ -8,7 +8,7 @@ interface FetchMoreButtonProps {
   onMoreClick: () => void
 }
 
-export function FetchMoreButton(props: FetchMoreButtonProps) {
+export function FetchMoreButton(props: Readonly<FetchMoreButtonProps>) {
   const theme = useTheme()
 
   if (!props.hasMore) {

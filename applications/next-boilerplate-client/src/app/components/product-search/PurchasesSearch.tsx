@@ -24,13 +24,15 @@ export function PurchasesSearch() {
     isLoading: isLoadingUsers,
     isError: isErrorUsers,
   } = useUsers(userSearchTerm)
+
   const {
     data: productsData,
     isLoading: isLoadingProducts,
     isError: isErrorProducts,
   } = useProducts(productSearchTerm)
+
   const {
-    data,
+    data: purchasesData,
     hasMore,
     fetchMore,
     isLoading: isLoadingPurchases,
@@ -93,7 +95,9 @@ export function PurchasesSearch() {
       <Divider />
 
       <ProductGrid
-        products={data?.map((purchase: Purchase): Product => purchase.product)}
+        products={purchasesData.map(
+          (purchase: Purchase): Product => purchase.product,
+        )}
         isLoading={isLoadingPurchases}
         hasMore={hasMore}
         onMoreClick={fetchMore}

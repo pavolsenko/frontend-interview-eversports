@@ -39,7 +39,7 @@ export const productItemImageErrorStyles = (theme: Theme): SxProps => ({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: theme.palette.grey[300],
-  color: 'white',
+  color: theme.palette.common.white,
   borderRadius: theme.shape.borderRadius,
 })
 
@@ -49,7 +49,7 @@ export const productItemTextStyles: SxProps = {
 }
 
 export const productGridFetchMoreStyles = (theme: Theme): SxProps => ({
-  marginY: theme.spacing(3),
+  marginY: theme.spacing(6),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

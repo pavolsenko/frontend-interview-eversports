@@ -1,5 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
 
 import { Purchase } from '@/app/app.types'
 import { DEFAULT_PURCHASES_PAGE_SIZE } from '@/app/config/query'
@@ -17,7 +17,7 @@ export function usePurchases(
   userIds: string[],
   productIds: string[],
 ): UsePurchases {
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState<boolean>(false)
 
   const PURCHASES_QUERY = gql`
     query Purchases(

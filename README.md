@@ -7,7 +7,7 @@ A customizable and responsive MultiSelect component built with **Material UI**. 
 ## Design
 
 - The component lives in the `lib` folder, since the design system would typically come from a separate library.
-- Styling is handled with **Material UI**, using theme variables to stay consistent with the Figma design.
+- Styling is handled with Material UI `sx` props and Emotion `styled` components, using theme variables to stay consistent with the Figma design.
 - All custom theme settings (primary color, typography, border radius, etc.) are defined in `theme.ts` and injected into components using the `useTheme` hook.
 
 ### Theme conventions
@@ -35,16 +35,29 @@ The component leverages Material UI’s responsive grid system. Example:
 </Grid>
 ```
 
+## Props
+
+| Prop                 | Type                       | Default  | Description                          |
+| -------------------- | -------------------------- | -------- | ------------------------------------ |
+| `options`            | MultiSelectOption[]        | []       | List of selectable options           |
+| `selectedOptions`    | string[]                   | []       | Currently selected option IDs        |
+| `onSelect`           | (values: string[]) => void | required | Callback when selections are applied |
+| `onClear`            | () => void                 | required | Callback when selection is cleared   |
+| `searchTerm`         | string                     | ''       | Current search input                 |
+| `onSearch`           | (term: string) => void     | required | Callback when search term changes    |
+| `label`              | string                     | required | Placeholder/label for dropdown       |
+| `selectedLabel`      | string                     | required | Label for a single selected item     |
+| `selectedLabelMulti` | string                     | required | Label for multiple selected items    |
+| `isLoading`          | boolean                    | false    | Displays loading state               |
+
+---
+
 ## UX decisions and behavior
 
-- **No options available**  
-  Display a message in the center of the window and disable control elements.
-
-- **No search results**  
-  Display a message in the center of the popover.
-
-- **Broken images**  
-  Broken images are replaced with an icon.
+- **No options available:** Displays a centered message and disables controls.
+- **No search results:** Displays a message centered in the popover.
+- **Select All behavior:** Applies only to visible options, using isIndeterminate for partial selections.
+- **Clear selection:** Clicking the clear icon removes all selected options.
 
 ### Select all behavior
 
@@ -60,4 +73,3 @@ The component leverages Material UI’s responsive grid system. Example:
 
 - Unit tests added using Jest
 - ARIA labels added to icon buttons that do not have visible labels for improved accessibility
-- Back to top button on search results

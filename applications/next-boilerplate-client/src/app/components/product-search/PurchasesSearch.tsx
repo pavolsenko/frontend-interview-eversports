@@ -96,7 +96,10 @@ export function PurchasesSearch() {
 
       <ProductGrid
         products={purchasesData.map(
-          (purchase: Purchase): Product => purchase.product,
+          (purchase: Purchase): Product => ({
+            ...purchase.product,
+            id: purchase.id + purchase.product.id,
+          }),
         )}
         isLoading={isLoadingPurchases}
         hasMore={hasMore}

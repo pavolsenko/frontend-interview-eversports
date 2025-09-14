@@ -34,6 +34,7 @@ export function ProductImage(props: Readonly<ProductImageProps>) {
         src={props.imageUrl}
         alt={props.alt}
         fill
+        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
         style={{ objectFit: 'cover' }}
         onError={() => setHasError(true)}
       />

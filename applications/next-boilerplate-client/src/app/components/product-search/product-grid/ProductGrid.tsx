@@ -15,6 +15,7 @@ import {
   productGridNoResultsStyles,
   productGridStyles,
 } from '@/app/components/product-search/product-grid/productGridStyles'
+import { BackToTopButton } from '@/app/components/product-search/product-grid/BackToTopButton'
 
 interface ProductGridProps {
   products: Product[]
@@ -37,14 +38,17 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
 
   if (props.products.length === 0) {
     return (
-      <Typography variant={'h4'} sx={productGridNoResultsStyles}>
-        No results
-      </Typography>
+      <Box sx={productGridNoResultsStyles}>
+        <Typography variant={'h4'}>No results</Typography>
+      </Box>
     )
   }
 
   return (
-    <Box sx={productGridStyles(theme)}>
+    <Box
+      sx={productGridStyles(theme)}
+      aria-busy={props.isFetchingMore ? 'true' : 'false'}
+    >
       <Grid container columnSpacing={2} rowSpacing={2}>
         {props.products.map((product: Product) => (
           <Grid
@@ -60,11 +64,14 @@ export function ProductGrid(props: Readonly<ProductGridProps>) {
           </Grid>
         ))}
       </Grid>
+
       <FetchMoreButton
         hasMore={props.hasMore}
         isLoading={props.isFetchingMore}
         onMoreClick={props.onMoreClick}
       />
+
+      <BackToTopButton />
     </Box>
   )
 }

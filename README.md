@@ -1,27 +1,26 @@
-# Reusable MultiSelect component
+# Reusable MultiSelect Component
+
+A customizable and responsive MultiSelect component built with **Material UI**. This component is designed to be easily integrated into projects while maintaining a consistent design system.
+
+---
 
 ## Design
 
-Since the design system which this component would be coming from
-might be a separate library I've placed the component in the `lib`
-folder.
+- The component lives in the `lib` folder, since the design system would typically come from a separate library.
+- Styling is handled with **Material UI**, using theme variables to stay consistent with the Figma design.
+- All custom theme settings (primary color, typography, border radius, etc.) are defined in `theme.ts` and injected into components using the `useTheme` hook.
 
-I've chosen MaterialUI as styling framework since I'm mostly familiar
-with it.
+### Theme conventions
 
-Variables from Figma are handled similarly in Material UI and passed
-as theme variable to the styling. All custom theme settings
-(primary color, typography, border radius, etc.) are configured
-in the file `theme.ts` and injected to components using the `useTheme`
-hook.
+- **Spacing** is defined in multiples of 4:
+  - `theme.spacing(0)` → 4px
+  - `theme.spacing(1)` → 8px
+  - `theme.spacing(2)` → 16px
+- **Border radius** is defined in the theme as `theme.shape.borderRadius`
 
-- paddings/margin are defined as multiplies of 4 e.g:
-  - `padding: theme.spacing(0)` is padding of 4px
-  - `padding: theme.spacing(1)` is padding of 8px
-  - `padding: theme.spacing(2)` is padding of 16px etc.
-- border radius is defined in the theme as `theme.shape.borderRadius`
+### Responsiveness
 
-Responsiveness was achieved using MaterialUI's responsive grid system:
+The component leverages Material UI’s responsive grid system. Example:
 
 ```tsx
 <Grid
@@ -36,21 +35,29 @@ Responsiveness was achieved using MaterialUI's responsive grid system:
 </Grid>
 ```
 
-### Additions UX updates/decisions
+## UX decisions and behavior
 
-no options - message in the middle of the window - control elements disabled
-no search results - message in the middle of the popover
+- **No options available**  
+  Display a message in the center of the window and disable control elements.
 
-UX challenge - how the select all checkbox should behave
+- **No search results**  
+  Display a message in the center of the popover.
 
-- select all applies only to the
-- use isIndeterminat?
+- **Broken images**  
+  Broken images are replaced with an icon.
 
-By default the page size is set to 24 since that's
+### Select all behavior
 
-broken images were replaced with an icon
+- "Select all" applies only to the currently displayed items.
+- `isIndeterminate` is used to reflect partial selections.
 
-Bonus features :)
+### Pagination
 
-- added unit tests using jest
-- added aria labels to icon buttons without labels
+- Default page size: **24 items**
+- This number divides evenly into a uniform grid across common screen sizes.
+
+## Bonus features
+
+- Unit tests added using Jest
+- ARIA labels added to icon buttons that do not have visible labels for improved accessibility
+- Back to top button on search results

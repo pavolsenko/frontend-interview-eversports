@@ -110,7 +110,12 @@ export default function MultiSelect(props: Readonly<MultiSelectProps>) {
           props.selectedLabelMulti.slice(1)}
       </Box>
 
-      <Box onClick={openPopover} sx={multiSelectStyles(theme, isOpen)}>
+      <Box
+        onClick={openPopover}
+        sx={multiSelectStyles(theme, isOpen)}
+        aria-haspopup={'listbox'}
+        aria-expanded={isOpen}
+      >
         <Typography variant={'body2'}>{getLabel()}</Typography>
         <MultiSelectIcon
           label={props.label}

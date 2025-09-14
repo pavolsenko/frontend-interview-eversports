@@ -63,3 +63,9 @@ export const productGridFetchMoreStyles = (theme: Theme): SxProps => ({
     minHeight: '42px',
   },
 })
+
+export const productGridBackToTopStyles = (theme: Theme): SxProps => ({
+  position: 'fixed',
+  bottom: theme.spacing(6),
+  right: theme.spacing(4),
+})
